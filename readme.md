@@ -12,6 +12,14 @@ ParkWise is a parking management system developed in Python. It automates the pr
 - Check available parking spots
 - Generate parking bills
 - User-friendly interface
+-Implementation of OOPS principles: 
+  -Inheritance- Base class vehicle has subclasses Bicycle,Car,Bike
+  -Polymorphism-parking_rate in base class is override as required
+  -Encapsulation-Classes such as Vehicle,ParkingLot are used for data encapsulation
+  -Abstraction-vehicle management and parking operations are abstracted within class and user calls
+               only high-level methods
+  -Modularity-System is divided into multiply classes for maintainability and readability of code.
+
 
 ## Requirements
 

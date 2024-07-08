@@ -9,216 +9,280 @@ Original file is located at
 The **parking management system** project using Python is an efficient and effective way of managing parking spaces. It automates the process of parking management, reducing the workload of the management team. The system is easy to use and provides real-time updates to the admin and users. It also helps in reducing the time taken for parking and improves the overall parking experience.
 "You can add a vehicle by choosing option 1. To remove a vehicle, select option 2. To check the remaining spots, pick option 3. For the number of available parking spots, go for option 4. To see how many parking spaces are left, opt for option 5. To generate a bill for a vehicle, select option 6. To exit the program, choose the exit option."
 
-Future Scope:interface can be improved by using tkinter.
+Future Scope:interface can be improved by using tkinter.Adding new features.
 """
-
 # Import Time
 import time
 
-Vehicle_Number = ['XXXX-XX-XXXX']
-Vehicle_Type = ['Bike']
-vehicle_Name = ['Intruder']
-Owner_Name = ['Unknown']
-Date = ['22-22-3636']
-Time = ['22:22:22']
-bikes = 100
-cars = 250
-bicycles = 100
+class Vehicle:
+    def __init__(self, number, name, owner, date, time):
+        self.number = number
+        self.name = name
+        self.owner = owner
+        self.date = date
+        self.time = time
+    
+    def parking_rate(self):
+        raise NotImplementedError("Subclasses should implement this!")
 
-def main():
-    global bikes, cars, bicycles
-    try:
-        while True:
-            print("----------------------------------------------------------------------------------------")
-            print("\t\tParking Management System")
-            print("----------------------------------------------------------------------------------------")
-            print("1.Vehicle Entry")
-            print("2.Remove Entry" )
-            print("3.View Parked Vehicle ")
-            print("4.View Left Parking Space ")
-            print("5.Amount Details ")
-            print("6.Bill")
-            print("7.Close Programme ")
-            print("+---------------------------------------------+")
-            ch = int(input("\tSelect option:"))
-            if ch == 1:
-                no = True
-                while no == True:
-                    Vno = input("\tEnter vehicle number (XXXX-XX-XXXX) - ").upper()
-                    if Vno == "":
-                        print("###### Enter Vehicle No. ######")
-                    elif Vno in Vehicle_Number:
-                        print("###### Vehicle Number Already Exists")
-                    elif len(Vno) == 12:
-                        no = not True
-                        Vehicle_Number.append(Vno)
-                    else:
-                        print("###### Enter Valid Vehicle Number ######")
-                typee = True
-                while typee == True:
-                    Vtype = str(input("\tEnter vehicle type(Bicycle=A/Bike=B/Car=C):")).lower()
-                    if Vtype == "":
-                        print("###### Enter Vehicle Type ######")
-                    elif Vtype == "a":
-                        Vehicle_Type.append("Bicycle")
-                        bicycles -= 1
-                        typee = not True
-                    elif Vtype == "b":
-                        Vehicle_Type.append("Bike")
-                        bikes -= 1
-                        typee = not True
-                    elif Vtype == "c":
-                        Vehicle_Type.append("Car")
-                        cars -= 1
-                        typee = not True
-                    else:
-                        print("###### Please Enter Valid Option ######")
-                name = True
-                while name == True:
-                    vname = input("\tEnter vehicle name - ")
-                    if vname == "":
-                        print("########Please Enter Vehicle Name ########")
-                    else:
-                        vehicle_Name.append(vname)
-                        name = not True
-                o = True
-                while o==True:
-                    OName = input("\tEnter owner name - ")
-                    if OName == "":
-                        print("###### Please Enter Owner Name ######")
-                    else:
-                        Owner_Name.append(OName)
-                        o = not True
-                d = True
-                while d == True:
-                    date = input("\tEnter Date (DD-MM-YYYY) - ")
-                    if date == "":
-                        print("###### Enter Date ######")
-                    elif len(date) != 10:
-                        print("###### Enter Valid Date ######")
-                    else:
-                        Date.append(date)
-                        d = not True
-                t = True
-                while t==True:
-                    time=input("\tEnter Time (HH:MM:SS) - ")
-                    if t=="":
-                        print("###### Enter Time ######")
-                    elif len(time)!=8:
-                        print("###### Please Enter Valid Date ######")
-                    else:
-                        Time.append(time)
-                        t=not True
-                print("\n............................................................Record detail saved..................................................................")
-            elif ch==2:
-                no=True
-                while no==True:
-                    Vno=input("\tEnter vehicle number to Delete(XXXX-XX-XXXX) - ").upper()
-                    if Vno=="":
-                        print("###### Enter Vehicle No. ######")
-                    elif len(Vno)==12:
-                        if Vno in Vehicle_Number:
-                            i=Vehicle_Number.index(Vno)
-                            Vehicle_Number.pop(i)
-                            Vehicle_Type.pop(i)
-                            vehicle_Name.pop(i)
-                            Owner_Name.pop(i)
-                            Date.pop(i)
-                            Time.pop(i)
-                            no=not True
-                            print("\n............................................................Removed Sucessfully..................................................................")
-                        elif Vno not in Vehicle_Number:
-                            print("###### No Such Entry ######")
-                        else:
-                            print("Error")
-                    else:
-                        print("###### Enter Valid Vehicle Number ######")
-            elif ch==3:
-                count=0
-                print("----------------------------------------------------------------------------------------------------------------------")
-                print("\t\t\t\tParked Vehicle")
-                print("----------------------------------------------------------------------------------------------------------------------")
-                print("Vehicle No.\tVehicle Type        Vehicle Name\t       Owner Name\t     Date\t\tTime")
-                print("----------------------------------------------------------------------------------------------------------------------")
-                for i in range(len(Vehicle_Number)):
-                    count+=1
-                    print(Vehicle_Number[i],"\t  ",Vehicle_Type[i],"\t            ",vehicle_Name[i],"\t       ",Owner_Name[i],"      " ,Date[i],"          ",Time[i])
-                print("----------------------------------------------------------------------------------------------------------------------")
-                print("------------------------------------------ Total Records - ",count,"-------------------------------------------------------")
-                print("----------------------------------------------------------------------------------------------------------------------")
-            elif ch==4:
-                print("----------------------------------------------------------------------------------------------------------------------")
-                print("\t\t\t\tSpaces Left For Parking")
-                print("----------------------------------------------------------------------------------------------------------------------")
-                print("\tSpaces Available for Bicycle - ",bicycles)
-                print("\tSpaces Available for Bike - ",bikes)
-                print("\tSpaces Available for Car - ",cars)
-                print("----------------------------------------------------------------------------------------------------------------------")
-            elif ch==5:
-                print("----------------------------------------------------------------------------------------------------------------------")
-                print("\t\t\t\tParking Rate")
-                print("----------------------------------------------------------------------------------------------------------------------")
-                print("*1.Bicycle      Rs20 / Hour")
-                print("*2.Bike         Rs40/ Hour")
-                print("*3.Car          Rs60/ Hour")
-                print("----------------------------------------------------------------------------------------------------------------------")
-            elif ch==6:
-                print(".............................................................. Generating Bill ..........................................................................")
-                no=True
-                while no==True:
-                    Vno=input("\tEnter vehicle number to Delete(XXXX-XX-XXXX) - ").upper()
-                    if Vno=="":
-                        print("###### Enter Vehicle No. ######")
-                    elif len(Vno)==12:
-                        if Vno in Vehicle_Number:
-                            i=Vehicle_Number.index(Vno)
-                            no=not True
-                        elif Vno not in Vehicle_Number:
-                            print("###### No Such Entry ######")
-                        else:
-                            print("Error")
-                    else:
-                        print("###### Enter Valid Vehicle Number ######")
-                print("\tVehicle Check in time - ",Time[i])
-                print("\tVehicle Check in Date - ",Date[i])
-                print("\tVehicle Type - ",Vehicle_Type[i])
-                inp=True
-                amt=0
-                while inp==True:
-                    hr=input("\tEnter No. of Hours Vehicle Parked - ").lower()
-                    if hr=="":
-                        print("###### Please Enter Hours ######")
-                    elif int(hr)==0 and Vehicle_Type[i]=="Bicycle":
-                        amt=20
-                        inp=not True
-                    elif int(hr)==0 and Vehicle_Type[i]=="Bike":
-                        amt=40
-                        inp=not True
-                    elif int(hr)==0 and Vehicle_Type[i]=="Car":
-                        amt=60
-                        inp=not True
-                    elif int(hr)>=1:
-                        if Vehicle_Type[i]=="Bicycle":
-                            amt=int(hr)*int(20)
-                            inp=not True
-                        elif Vehicle_Type[i]=="Bike":
-                            amt=int(hr)*int(40)
-                            inp=not True
-                        elif Vehicle_Type[i]=="Car":
-                            amt=int(hr)*int(60)
-                            inp=not True
-                print("\t Parking Charge - ",amt)
-                ac=18/100*int(amt)
-                print("\tAdd. charge 18 % - ",ac)
-                print("\tTotal Charge - ",int(amt)+int(ac))
-                print("..............................................................Thank you for using our service...........................................................................")
-                a=input("\tPress enter Key to Proceed - ")
-            elif ch==7:
-                print("..............................................................Thank you for using our service...........................................................................")
+class Bicycle(Vehicle):
+    def __init__(self, number, name, owner, date, time):
+        super().__init__(number, name, owner, date, time)
+    
+    def parking_rate(self):
+        return 20
 
-                break
-                quit
-    except:
-        main()
+class Bike(Vehicle):
+    def __init__(self, number, name, owner, date, time):
+        super().__init__(number, name, owner, date, time)
+    
+    def parking_rate(self):
+        return 40
 
-main()
+class Car(Vehicle):
+    def __init__(self, number, name, owner, date, time):
+        super().__init__(number, name, owner, date, time)
+    
+    def parking_rate(self):
+        return 60
+
+class ParkingLot:
+    def __init__(self):
+        self.vehicles = []
+        self.bikes = 100
+        self.cars = 250
+        self.bicycles = 100
+
+    def add_vehicle(self, vehicle):
+        self.vehicles.append(vehicle)
+        if isinstance(vehicle, Bicycle):
+            self.bicycles -= 1
+        elif isinstance(vehicle, Bike):
+            self.bikes -= 1
+        elif isinstance(vehicle, Car):
+            self.cars -= 1
+
+    def remove_vehicle(self, vehicle_number):
+        for vehicle in self.vehicles:
+            if vehicle.number == vehicle_number:
+                self.vehicles.remove(vehicle)
+                if isinstance(vehicle, Bicycle):
+                    self.bicycles += 1
+                elif isinstance(vehicle, Bike):
+                    self.bikes += 1
+                elif isinstance(vehicle, Car):
+                    self.cars += 1
+                return True
+        return False
+
+    def view_parked_vehicles(self):
+        print("----------------------------------------------------------------------------------------------------------------------")
+        print("\t\t\t\tParked Vehicle")
+        print("----------------------------------------------------------------------------------------------------------------------")
+        print("Vehicle No.\tVehicle Type        Vehicle Name\t       Owner Name\t     Date\t\tTime")
+        print("----------------------------------------------------------------------------------------------------------------------")
+        for vehicle in self.vehicles:
+            vehicle_type = type(vehicle).__name__
+            print(f"{vehicle.number}\t  {vehicle_type}\t            {vehicle.name}\t       {vehicle.owner}\t      {vehicle.date}\t          {vehicle.time}")
+        print("----------------------------------------------------------------------------------------------------------------------")
+        print(f"------------------------------------------ Total Records - {len(self.vehicles)} -------------------------------------------------------")
+        print("----------------------------------------------------------------------------------------------------------------------")
+
+    def view_left_parking_space(self):
+        print("----------------------------------------------------------------------------------------------------------------------")
+        print("\t\t\t\tSpaces Left For Parking")
+        print("----------------------------------------------------------------------------------------------------------------------")
+        print(f"\tSpaces Available for Bicycle - {self.bicycles}")
+        print(f"\tSpaces Available for Bike - {self.bikes}")
+        print(f"\tSpaces Available for Car - {self.cars}")
+        print("----------------------------------------------------------------------------------------------------------------------")
+
+    def generate_bill(self, vehicle_number, hours_parked):
+        for vehicle in self.vehicles:
+            if vehicle.number == vehicle_number:
+                rate = vehicle.parking_rate()
+                amt = hours_parked * rate
+                ac = 18 / 100 * amt
+                total = amt + ac
+                return amt, ac, total
+        return None, None, None
+
+class ParkingSystem:
+    def __init__(self):
+        self.parking_lot = ParkingLot()
+
+    def run(self):
+        try:
+            while True:
+                print("----------------------------------------------------------------------------------------")
+                print("\t\tParking Management System")
+                print("----------------------------------------------------------------------------------------")
+                print("1.Vehicle Entry")
+                print("2.Remove Entry" )
+                print("3.View Parked Vehicle ")
+                print("4.View Left Parking Space ")
+                print("5.Amount Details ")
+                print("6.Bill")
+                print("7.Close Programme ")
+                print("+---------------------------------------------+")
+                ch = int(input("\tSelect option:"))
+                if ch == 1:
+                    self.vehicle_entry()
+                elif ch == 2:
+                    self.remove_entry()
+                elif ch == 3:
+                    self.parking_lot.view_parked_vehicles()
+                elif ch == 4:
+                    self.parking_lot.view_left_parking_space()
+                elif ch == 5:
+                    self.amount_details()
+                elif ch == 6:
+                    self.generate_bill()
+                elif ch == 7:
+                    print("..............................................................Thank you for using our service...........................................................................")
+                    break
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            self.run()
+
+    def vehicle_entry(self):
+        no = True
+        while no:
+            Vno = input("\tEnter vehicle number (XXXX-XX-XXXX) - ").upper()
+            if Vno == "":
+                print("###### Enter Vehicle No. ######")
+            elif any(vehicle.number == Vno for vehicle in self.parking_lot.vehicles):
+                print("###### Vehicle Number Already Exists")
+            elif len(Vno) == 12:
+                no = False
+            else:
+                print("###### Enter Valid Vehicle Number ######")
+        
+        typee = True
+        while typee:
+            Vtype = input("\tEnter vehicle type(Bicycle=A/Bike=B/Car=C):").lower()
+            if Vtype == "":
+                print("###### Enter Vehicle Type ######")
+            elif Vtype == "a":
+                Vtype = "Bicycle"
+                typee = False
+            elif Vtype == "b":
+                Vtype = "Bike"
+                typee = False
+            elif Vtype == "c":
+                Vtype = "Car"
+                typee = False
+            else:
+                print("###### Please Enter Valid Option ######")
+        
+        name = True
+        while name:
+            vname = input("\tEnter vehicle name - ")
+            if vname == "":
+                print("########Please Enter Vehicle Name ########")
+            else:
+                name = False
+        
+        o = True
+        while o:
+            OName = input("\tEnter owner name - ")
+            if OName == "":
+                print("###### Please Enter Owner Name ######")
+            else:
+                o = False
+        
+        d = True
+        while d:
+            date = input("\tEnter Date (DD-MM-YYYY) - ")
+            if date == "":
+                print("###### Enter Date ######")
+            elif len(date) != 10:
+                print("###### Enter Valid Date ######")
+            else:
+                d = False
+        
+        t = True
+        while t:
+            time = input("\tEnter Time (HH:MM:SS) - ")
+            if time == "":
+                print("###### Enter Time ######")
+            elif len(time) != 8:
+                print("###### Please Enter Valid Time ######")
+            else:
+                t = False
+
+        if Vtype == "Bicycle":
+            vehicle = Bicycle(Vno, vname, OName, date, time)
+        elif Vtype == "Bike":
+            vehicle = Bike(Vno, vname, OName, date, time)
+        elif Vtype == "Car":
+            vehicle = Car(Vno, vname, OName, date, time)
+        
+        self.parking_lot.add_vehicle(vehicle)
+        print("\n............................................................Record detail saved..................................................................")
+
+    def remove_entry(self):
+        no = True
+        while no:
+            Vno = input("\tEnter vehicle number to Delete(XXXX-XX-XXXX) - ").upper()
+            if Vno == "":
+                print("###### Enter Vehicle No. ######")
+            elif len(Vno) == 12:
+                if self.parking_lot.remove_vehicle(Vno):
+                    no = False
+                    print("\n............................................................Removed Successfully..................................................................")
+                else:
+                    print("###### No Such Entry ######")
+            else:
+                print("###### Enter Valid Vehicle Number ######")
+
+    def amount_details(self):
+        print("----------------------------------------------------------------------------------------------------------------------")
+        print("\t\t\t\tParking Rate")
+        print("----------------------------------------------------------------------------------------------------------------------")
+        print("*1.Bicycle      Rs20 / Hour")
+        print("*2.Bike         Rs40/ Hour")
+        print("*3.Car          Rs60/ Hour")
+        print("----------------------------------------------------------------------------------------------------------------------")
+
+    def generate_bill(self):
+        no = True
+        while no:
+            Vno = input("\tEnter vehicle number to generate bill(XXXX-XX-XXXX) - ").upper()
+            if Vno == "":
+                print("###### Enter Vehicle No. ######")
+            elif len(Vno) == 12:
+                if any(vehicle.number == Vno for vehicle in self.parking_lot.vehicles):
+                    no = False
+                else:
+                    print("###### No Such Entry ######")
+            else:
+                print("###### Enter Valid Vehicle Number ######")
+        
+        vehicle = next(vehicle for vehicle in self.parking_lot.vehicles if vehicle.number == Vno)
+        print(f"\tVehicle Check in time - {vehicle.time}")
+        print(f"\tVehicle Check in Date - {vehicle.date}")
+        print(f"\tVehicle Type - {type(vehicle).__name__}")
+        
+        inp = True
+        amt = 0
+        while inp:
+            hr = input("\tEnter No. of Hours Vehicle Parked - ")
+            if hr == "":
+                print("###### Please Enter Hours ######")
+            elif int(hr) == 0:
+                print("###### Please Enter Valid Hours ######")
+            else:
+                hr = int(hr)
+                amt, ac, total = self.parking_lot.generate_bill(Vno, hr)
+                inp = False
+        
+        print("\tParking Amount - ", amt)
+        print("\tAdditional Charges - ", ac)
+        print("\tTotal Amount - ", total)
+        print("----------------------------------------------------------------------------------------------------------------------")
+
+# Run the Parking System
+if __name__ == "__main__":
+    ps = ParkingSystem()
+    ps.run()
